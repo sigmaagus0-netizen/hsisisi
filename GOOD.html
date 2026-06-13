@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Anniversary Arda & Moza! ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
+            font-family: 'Nunito', sans-serif;
+            color: #4a4a4a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 75, 110, 0.2);
+            max-width: 500px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+            border: 4px solid #fff;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            color: #ff4b6e;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px #ffb3c6;
+        }
+
+        .names {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            color: #ff7096;
+            margin-bottom: 20px;
+        }
+
+        .counter-box {
+            background: #fff0f3;
+            padding: 15px;
+            border-radius: 20px;
+            border: 2px dashed #ff7096;
+            margin: 20px 0;
+        }
+
+        .counter-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #ff4b6e;
+            margin-bottom: 5px;
+        }
+
+        .timer {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            color: #4a4a4a;
+        }
+
+        p.ucapan {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        /* Stiker Hewan */
+        .pet-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            position: relative;
+            height: 120px;
+        }
+
+        .sticker-pet {
+            font-size: 4rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, left 0.3s ease, top 0.3s ease;
+            user-select: none;
+            position: absolute;
+            display: inline-block;
+        }
+
+        #cat { left: 20%; top: 20px; }
+        #bear { left: 60%; top: 20px; }
+
+        .sticker-pet:active {
+            transform: scale(1.3) rotate(10deg);
+        }
+
+        /* Pop-up teks kecil di atas hewan */
+        .speech-bubble {
+            position: absolute;
+            background: #fff;
+            border: 2px solid #ff7096;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #ff7096;
+            display: none;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Efek Hati Berjatuhan */
+        .heart {
+            position: fixed;
+            color: #ff4b6e;
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: 1;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-20px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Happy Anniversary!</h1>
+        <div class="names">💖 Arda & Moza 💖</div>
+        
+        <p class="ucapan">
+            "Sejak 12 Februari 2026, setiap hari jadi lebih berwarna karena ada kamu. Terima kasih ya sudah menjadi bagian terindah dalam hidupku. Tetap sama-sama terus ya! 🥰"
+        </p>
+
+        <div class="counter-box">
+            <div class="counter-title">Kita Sudah Bersama Selama:</div>
+            <div class="timer" id="countdown">Menghitung waktu...</div>
+        </div>
+
+        <p style="font-size: 0.9rem; color: #aaa;">👉 Coba klik atau dekati hewan lucu di bawah ini! 👈</p>
+        
+        <div class="pet-container">
+            <!-- Stiker Kucing -->
+            <div class="sticker-pet" id="cat" title="Klik aku!">🐱</div>
+            <!-- Stiker Beruang -->
+            <div class="sticker-pet" id="bear" title="Dekati aku!">🐻</div>
+        </div>
+    </div>
+
+    <div class="speech-bubble" id="bubble">Meow!</div>
+
+    <script>
+        // --- 1. HITUNGAN WAKTU PACARAN (Dari 12 Feb 2026) ---
+        const startDate = new Date("2026-02-12T00:00:00").getTime();
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const difference = now - startDate;
+
+            if (difference < 0) {
+                document.getElementById("countdown").innerHTML = "Menghitung mundur menuju 12 Feb 2026...";
+                return;
+            }
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = 
+                `${days} Hari, ${hours} Jam, ${minutes} Menit, ${seconds} Detik`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+
+        // --- 2. EFEK HUJAN HATI ---
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+        setInterval(createHeart, 400);
+
+
+        // --- 3. INTERAKSI STIKER HEWAN LUCU ---
+        const cat = document.getElementById('cat');
+        const bear = document.getElementById('bear');
+        const bubble = document.getElementById('bubble');
+
+        // Suara/Teks respon saat Kucing di-klik
+        const catQuotes = ["Meow! Sayang Moza!", "Arda ❤️ Moza", "Purr... Nyaman banget!", "Klik lagi dong! 🥰"];
+        cat.addEventListener('click', (e) => {
+            const randomQuote = catQuotes[Math.floor(Math.random() * catQuotes.length)];
+            showBubble(e.pageX, e.pageY - 60, randomQuote);
+            
+            // Efek melompat lucu
+            cat.style.transform = 'scale(1.4) translateY(-20px)';
+            setTimeout(() => cat.style.transform = 'scale(1)', 200);
+        });
+
+        // Beruang Lucu: Menghindar saat didekati kursor (Iseng/Lucu)
+        bear.addEventListener('mouseover', () => {
+            const containerBox = document.querySelector('.pet-container').getBoundingClientRect();
+            
+            // Acak posisi baru di dalam area kontainer
+            const newLeft = Math.random() * (containerBox.width - 60);
+            const newTop = Math.random() * (containerBox.height - 60);
+            
+            bear.style.left = newLeft + 'px';
+            bear.style.top = newTop + 'px';
+            
+            // Tampilkan chat bubble si beruang panik
+            const bearQuotes = ["Eits gak kena! 🐻", "Kejar aku! 🏃‍♂️", "Wlee blee! 😜", "Sayang banget deh! 💖"];
+            const randomBearQuote = bearQuotes[Math.floor(Math.random() * bearQuotes.length)];
+            
+            const bearRect = bear.getBoundingClientRect();
+            showBubble(bearRect.left + window.scrollX, bearRect.top + window.scrollY - 40, randomBearQuote);
+        });
+
+        // Fungsi menampilkan balon teks ucapan hewan
+        function showBubble(x, y, text) {
+            bubble.innerText = text;
+            bubble.style.left = x + 'px';
+            bubble.style.top = y + 'px';
+            bubble.style.display = 'block';
+            
+            setTimeout(() => {
+                bubble.style.display = 'none';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
